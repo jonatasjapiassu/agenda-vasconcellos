@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Agenda Vasconcellos</title>
+<meta name="theme-color" content="#264D3B">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--c1:#264D3B;--c2:#D9893B;--bg:#FBF6EA;--ink:#1F2A30;--muted:#4A5A60;--line:#E4DAC4;--card:#fff}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;margin:0}
+h2{font-size:20px;margin-bottom:10px}
+.topo{background:var(--c1);color:#FBF6EA;display:flex;align-items:center;gap:12px;padding:10px 16px;padding-top:calc(10px + env(safe-area-inset-top));position:sticky;top:0;z-index:5}
+.topo h1{font-size:22px}
+.emb{width:44px;height:44px;flex:none}
+.emb svg{width:100%;height:100%;display:block}
+.main{padding:16px 16px 96px;max-width:640px;margin:0 auto}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:16px}
+.card.destaque{background:var(--c2);border-color:var(--c2)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;border:2px solid var(--c1);border-radius:12px;padding:0 18px;font:inherit;font-weight:600;background:var(--c1);color:#FBF6EA;cursor:pointer;text-decoration:none}
+.btn.sec{background:transparent;color:var(--c1)}
+.btn.peq{min-height:40px;padding:0 12px;font-size:15px}
+.btn.full{display:flex;width:100%}
+.btn[disabled]{opacity:.6}
+input,select{width:100%;min-height:46px;border:1.5px solid #8F8468;border-radius:12px;padding:0 12px;font:inherit;background:#fff;color:var(--ink)}
+input[type=checkbox],input[type=radio]{width:22px;height:22px;min-height:0;flex:none}
+input[type=file]{padding:8px 12px}
+label{display:block;font-weight:600;margin:12px 0 4px}
+.chk{display:flex;gap:10px;align-items:flex-start;font-weight:400;margin:14px 0}
+.dica{color:var(--muted);font-size:14px}
+.erro{color:#9B1C1C;font-weight:600;margin:10px 0}
+.linha{display:flex;gap:8px}
+.linha>*{flex:1}
+.item{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:10px 0;border-top:1px solid var(--line)}
+.item:first-of-type{border-top:0}
+.item .quem{display:flex;align-items:center;gap:12px;flex:1 1 100%;min-width:0;background:none;border:0;padding:0;font:inherit;color:inherit;text-align:left;cursor:pointer}
+.item .t{flex:1;min-width:0}
+.item .n{display:block;font-weight:600;overflow-wrap:anywhere}
+.btns{margin-left:60px;display:flex;gap:8px;flex-wrap:wrap}
+.av{width:48px;height:48px;border-radius:50%;background:var(--c1);color:#FBF6EA;display:flex;align-items:center;justify-content:center;font-weight:700;flex:none;overflow:hidden}
+.av img{width:100%;height:100%;object-fit:cover;display:block}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:5}
+.nav button{flex:1;min-height:56px;border:0;background:none;font:inherit;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer}
+.nav button[aria-current=page]{color:var(--c1);box-shadow:inset 0 3px 0 var(--c1)}
+.arv ul{list-style:none;margin:0;padding-left:18px;border-left:2px solid var(--line)}
+.arv>ul{padding-left:0;border-left:0}
+.arv li{margin:8px 0}
+.link{background:none;border:0;padding:4px 0;font:inherit;color:var(--c1);font-weight:600;text-align:left;text-decoration:underline;cursor:pointer;min-height:36px}
+.pill{display:inline-block;background:var(--c2);color:#1F2A30;border-radius:999px;padding:2px 10px;font-size:13px;font-weight:700}
+.gate{max-width:420px;margin:0 auto;padding:40px 20px;text-align:center}
+.gate .emb{width:150px;height:150px;margin:0 auto 16px}
+.gate h1{font-size:34px;color:var(--c1);margin-bottom:6px}
+.gate form{text-align:left;margin:18px 0}
+.gate a,.card a{color:var(--c1);font-weight:600}
+.gate .carta{text-align:left;background:var(--card);border:1px solid var(--line);border-left:5px solid var(--c2);border-radius:16px;padding:14px 16px;margin:16px 0}
+.gate .carta h2{font-size:19px;color:var(--c1);margin:0 0 8px}
+.gate .carta p{margin:0 0 10px;line-height:1.5}
+.gate .carta .assina{margin:12px 0 0;color:var(--c1)}
+.aviso{background:#FFF3CD;border-bottom:1px solid #E6D08A;padding:8px 16px;font-size:14px;text-align:center}
+.prog{height:6px;background:var(--line);border-radius:3px;margin-bottom:14px}
+.prog i{display:block;height:100%;background:var(--c1);border-radius:3px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<template id="emb"><svg viewBox="0 0 240 240" role="img" aria-label="Emblema da Agenda Vasconcellos"><circle cx="120" cy="120" r="112" fill="#264D3B"/><circle cx="120" cy="120" r="104" fill="none" stroke="#D9893B" stroke-width="2.5"/><path d="M107.5 190.9 A72 72 0 0 1 54.7 89.6" fill="none" stroke="#F4E9CF" stroke-width="3" stroke-linecap="round"/><ellipse cx="103.5" cy="186.4" rx="4.6" ry="11" fill="#9DBF8A" transform="rotate(138.0 103.5 186.4)"/><ellipse cx="102.2" cy="193.7" rx="4.6" ry="11" fill="#F4E9CF" transform="rotate(62.0 102.2 193.7)"/><ellipse cx="90.0" cy="181.6" rx="4.6" ry="11" fill="#9DBF8A" transform="rotate(150.0 90.0 181.6)"/><ellipse cx="87.3" cy="188.4" rx="4.6" ry="11" fill="#F4E9CF" transform="rotate(74.0 87.3 188.4)"/><ellipse cx="77.9" cy="174.0" rx="4.6" ry="11" fill="#9DBF8A" transform="rotate(162.0 77.9 174.0)"/><ellipse cx="73.8" cy="180.1" rx="4.6" ry="11" fill="#F4E9CF" transform="rotate(86.0 73.8 180.1)"/><ellipse cx="67.6" cy="164.0" rx="4.6" ry="11" fill="#9DBF8A" transform="rotate(174.0 67.6 164.0)"/><ellipse cx="62.3" cy="169.2" rx="4.6" ry="11" fill="#F4E9CF" transform="rotate(98.0 62.3 169.2)"/><ellipse cx="59.6" cy="152.2" rx="4.6" ry="11" fill="#9DBF8A" transform="rotate(186.0 59.6 152.2)"/><ellipse cx="53.3" cy="156.1" rx="4.6" ry="11" fill="#F4E9CF" transform="rotate(110.0 53.3 156.1)"/><ellipse cx="54.2" cy="138.9" rx="4.6" ry="11" fill="#9DBF8A" transform="rotate(198.0 54.2 138.9)"/><ellipse cx="47.3" cy="141.4" rx="4.6" ry="11" fill="#F4E9CF" transform="rotate(122.0 47.3 141.4)"/><ellipse cx="51.7" cy="124.8" rx="4.6" ry="11" fill="#9DBF8A" transform="rotate(210.0 51.7 124.8)"/><ellipse cx="44.4" cy="125.9" rx="4.6" ry="11" fill="#F4E9CF" transform="rotate(134.0 44.4 125.9)"/><ellipse cx="52.2" cy="110.5" rx="4.6" ry="11" fill="#9DBF8A" transform="rotate(222.0 52.2 110.5)"/><ellipse cx="44.8" cy="110.0" rx="4.6" ry="11" fill="#F4E9CF" transform="rotate(146.0 44.8 110.0)"/><ellipse cx="55.6" cy="96.6" rx="4.6" ry="11" fill="#9DBF8A" transform="rotate(234.0 55.6 96.6)"/><ellipse cx="48.5" cy="94.6" rx="4.6" ry="11" fill="#F4E9CF" transform="rotate(158.0 48.5 94.6)"/><circle cx="54.7" cy="89.6" r="5" fill="#D9893B"/><path d="M132.5 190.9 A72 72 0 0 0 185.3 89.6" fill="none" stroke="#F4E9CF" stroke-width="3" stroke-linecap="round"/><ellipse cx="127.2" cy="188.1" rx="4.6" ry="11" fill="#9DBF8A" transform="rotate(118.0 127.2 188.1)"/><ellipse cx="128.5" cy="195.4" rx="4.6" ry="11" fill="#F4E9CF" transform="rotate(42.0 128.5 195.4)"/><ellipse cx="141.2" cy="185.1" rx="4.6" ry="11" fill="#9DBF8A" transform="rotate(106.0 141.2 185.1)"/><ellipse cx="144.0" cy="192.0" rx="4.6" ry="11" fill="#F4E9CF" transform="rotate(30.0 144.0 192.0)"/><ellipse cx="154.3" cy="179.3" rx="4.6" ry="11" fill="#9DBF8A" transform="rotate(94.0 154.3 179.3)"/><ellipse cx="158.4" cy="185.4" rx="4.6" ry="11" fill="#F4E9CF" transform="rotate(18.0 158.4 185.4)"/><ellipse cx="165.9" cy="170.9" rx="4.6" ry="11" fill="#9DBF8A" transform="rotate(82.0 165.9 170.9)"/><ellipse cx="171.2" cy="176.0" rx="4.6" ry="11" fill="#F4E9CF" transform="rotate(6.0 171.2 176.0)"/><ellipse cx="175.4" cy="160.2" rx="4.6" ry="11" fill="#9DBF8A" transform="rotate(70.0 175.4 160.2)"/><ellipse cx="181.7" cy="164.1" rx="4.6" ry="11" fill="#F4E9CF" transform="rotate(-6.0 181.7 164.1)"/><ellipse cx="182.6" cy="147.8" rx="4.6" ry="11" fill="#9DBF8A" transform="rotate(58.0 182.6 147.8)"/><ellipse cx="189.5" cy="150.3" rx="4.6" ry="11" fill="#F4E9CF" transform="rotate(-18.0 189.5 150.3)"/><ellipse cx="187.0" cy="134.2" rx="4.6" ry="11" fill="#9DBF8A" transform="rotate(46.0 187.0 134.2)"/><ellipse cx="194.3" cy="135.2" rx="4.6" ry="11" fill="#F4E9CF" transform="rotate(-30.0 194.3 135.2)"/><ellipse cx="188.5" cy="120.0" rx="4.6" ry="11" fill="#9DBF8A" transform="rotate(34.0 188.5 120.0)"/><ellipse cx="195.8" cy="119.4" rx="4.6" ry="11" fill="#F4E9CF" transform="rotate(-42.0 195.8 119.4)"/><ellipse cx="187.0" cy="105.7" rx="4.6" ry="11" fill="#9DBF8A" transform="rotate(22.0 187.0 105.7)"/><ellipse cx="194.1" cy="103.7" rx="4.6" ry="11" fill="#F4E9CF" transform="rotate(-54.0 194.1 103.7)"/><circle cx="185.3" cy="89.6" r="5" fill="#D9893B"/><text x="120" y="152" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="92" font-weight="700" fill="#F4E9CF">V</text><circle cx="106" cy="62" r="4" fill="#D9893B"/><circle cx="120" cy="62" r="4" fill="#D9893B"/><circle cx="134" cy="62" r="4" fill="#D9893B"/></svg></template>
+<script src="config.js"></script>
+<script>
+(() => {
+'use strict';
+const SLUG = 'vasconcellos', FAMILIA = 'Vasconcellos';
+const CFG = window.AGENDA_CONFIG || {};
+const SCRIPT_URL = String(CFG.SCRIPT_URL || '').trim();
+
+/* ---------- utilidades ---------- */
+const ls = {
+  get(k){ try { return localStorage.getItem('ag_' + SLUG + '_' + k); } catch (e) { return null; } },
+  set(k, v){ try { localStorage.setItem('ag_' + SLUG + '_' + k, v); } catch (e) {} },
+  del(k){ try { localStorage.removeItem('ag_' + SLUG + '_' + k); } catch (e) {} }
+};
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const EMB = document.getElementById('emb').innerHTML;
+const MESES = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+const DIAS_MES = [31,29,31,30,31,30,31,31,30,31,30,31];
+const ESTADOS = [['AC','Acre'],['AL','Alagoas'],['AP','Amapá'],['AM','Amazonas'],['BA','Bahia'],['CE','Ceará'],['DF','Distrito Federal'],['ES','Espírito Santo'],['GO','Goiás'],['MA','Maranhão'],['MT','Mato Grosso'],['MS','Mato Grosso do Sul'],['MG','Minas Gerais'],['PA','Pará'],['PB','Paraíba'],['PR','Paraná'],['PE','Pernambuco'],['PI','Piauí'],['RJ','Rio de Janeiro'],['RN','Rio Grande do Norte'],['RS','Rio Grande do Sul'],['RO','Rondônia'],['RR','Roraima'],['SC','Santa Catarina'],['SP','São Paulo'],['SE','Sergipe'],['TO','Tocantins'],['EX','Moro fora do Brasil']];
+const ufNome = uf => { const x = ESTADOS.find(e => e[0] === uf); return x ? x[1] : ''; };
+const local = p => { const c = p.cidade || ''; if (!c) return ''; if (!p.uf) return c; return p.uf === 'EX' ? c + ' (exterior)' : c + ' - ' + p.uf; };
+const norm = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
+const MIN = new Set(['de','da','do','das','dos','e','di','du']);
+const titulo = s => s.trim().replace(/\s+/g, ' ').split(' ').map((w, i) => {
+  const l = w.toLowerCase();
+  if (i > 0 && MIN.has(l)) return l;
+  return l.replace(/(^|[-'’])(\p{L})/gu, (m, a, b) => a + b.toUpperCase());
+}).join(' ');
+const novoId = () => { const a = new Uint8Array(8); crypto.getRandomValues(a); return Array.from(a, b => b.toString(36).padStart(2, '0')).join('').slice(0, 16); };
+const byNome = (a, b) => a.nome.localeCompare(b.nome, 'pt-BR');
+const iniciais = n => { const t = n.trim().split(/\s+/); return ((t[0] || '')[0] || '').toUpperCase() + (t.length > 1 ? t[t.length - 1][0].toUpperCase() : ''); };
+const fotoOk = f => typeof f === 'string' && /^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(f);
+const fmtTel = d => d.length === 11 ? `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}` : d.length === 10 ? `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}` : '+' + d;
+const parseNasc = n => { const m = /^(\d\d)\/(\d\d)$/.exec(n || ''); return m ? { d: +m[1], m: +m[2] } : null; };
+const nascTxt = p => { const n = parseNasc(p.nascimento); return n ? `${n.d} de ${MESES[n.m - 1]}` : ''; };
+const hoje = () => { const d = new Date(); return { d: d.getDate(), m: d.getMonth() + 1 }; };
+
+function lev(a, b) {
+  const m = a.length, n = b.length; if (!m) return n; if (!n) return m;
+  let prev = Array.from({ length: n + 1 }, (_, j) => j);
+  for (let i = 1; i <= m; i++) {
+    const cur = [i];
+    for (let j = 1; j <= n; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    prev = cur;
+  }
+  return prev[n];
+}
+
+function nomeErro(s) {
+  const t = s.trim().split(/\s+/).filter(Boolean);
+  if (t.length < 2) return 'Escreva o nome completo (nome e sobrenome).';
+  for (const w of t) {
+    if (/\./.test(w)) return 'Escreva o nome completo, sem abreviaturas.';
+    if (!/^[\p{L}'’-]+$/u.test(w)) return 'Use apenas letras no nome.';
+    if (w.length === 1 && !/^[eEyY]$/.test(w)) return 'Escreva o nome completo, sem abreviaturas.';
+  }
+  return '';
+}
+
+/* ---------- acesso aos dados ---------- */
+const api = {
+  async list(code) {
+    if (!SCRIPT_URL) {
+      if (code !== 'demo') throw new Error('codigo');
+      try { return JSON.parse(ls.get('demo') || '[]'); } catch (e) { return []; }
+    }
+    const r = await fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'list', code }) });
+    const j = await r.json();
+    if (!j.ok) throw new Error(j.erro || 'erro');
+    return j.rows;
+  },
+  async add(code, rows) {
+    if (!SCRIPT_URL) {
+      let db = []; try { db = JSON.parse(ls.get('demo') || '[]'); } catch (e) {}
+      const agora = new Date().toISOString();
+      rows.forEach(r => db.push(Object.assign({ criado_em: agora }, r)));
+      ls.set('demo', JSON.stringify(db));
+      return;
+    }
+    const r = await fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: 'add', code, rows }) });
+    const j = await r.json();
+    if (!j.ok) throw new Error(j.erro || 'erro');
+  }
+};
+
+/* ---------- estado ---------- */
+const S = { tela: 'gate', code: ls.get('code') || '', erro: '', rows: [], people: {}, filhos: {}, tab: 'inicio', voltar: 'pessoas', sel: null,
+            mes: new Date().getMonth() + 1, msg: '', offline: false, w: null, busca: '' };
+
+function consolidar(rows) {
+  const P = {};
+  for (const r of rows) {
+    const p = P[r.id] || (P[r.id] = { id: r.id, nome: r.nome, pai_id: '', mae_id: '', telefone: '', cidade: '', uf: '', nascimento: '', foto: '' });
+    if (!p.pai_id && r.pai_id) p.pai_id = r.pai_id;
+    if (!p.mae_id && r.mae_id) p.mae_id = r.mae_id;
+    for (const k of ['telefone', 'cidade', 'uf', 'nascimento', 'foto']) if (r[k]) p[k] = r[k];
+  }
+  const F = {};
+  for (const p of Object.values(P)) {
+    if (p.pai_id && !P[p.pai_id]) p.pai_id = '';
+    if (p.mae_id && !P[p.mae_id]) p.mae_id = '';
+    for (const k of ['pai_id', 'mae_id']) if (p[k]) (F[p[k]] = F[p[k]] || []).push(p.id);
+  }
+  S.filhos = F;
+  return P;
+}
+
+function aplicar(rows) { S.rows = rows; S.people = consolidar(rows); }
+
+async function carregar() {
+  S.tela = 'carregando'; render();
+  try {
+    const rows = await api.list(S.code);
+    ls.set('code', S.code); ls.set('cache', JSON.stringify(rows));
+    aplicar(rows); S.offline = false; S.tela = 'app'; S.erro = '';
+  } catch (e) {
+    if (e.message === 'codigo') { ls.del('code'); ls.del('cache'); S.code = ''; S.erro = 'Código incorreto.'; S.tela = 'gate'; }
+    else {
+      let c = null; try { c = JSON.parse(ls.get('cache') || 'null'); } catch (x) {}
+      if (c) { aplicar(c); S.offline = true; S.tela = 'app'; }
+      else { S.erro = 'Não foi possível conectar. Tente de novo.'; S.tela = 'gate'; }
+    }
+  }
+  render();
+}
+
+async function recarregar() { const rows = await api.list(S.code); ls.set('cache', JSON.stringify(rows)); aplicar(rows); S.offline = false; }
+
+/* ---------- duplicidade ---------- */
+const semCon = s => s.split(' ').filter(w => !MIN.has(w)).join(' ');
+function achar(nome, excl) {
+  const n = norm(nome), nk = semCon(n), t = nk.split(' '), out = [];
+  for (const p of Object.values(S.people)) {
+    if (excl && excl.includes(p.id)) continue;
+    const pn = norm(p.nome), pk = semCon(pn);
+    if (pn === n) out.push({ p, igual: true });
+    else if (pk === nk) out.push({ p, igual: false });
+    else {
+      const pt = pk.split(' ');
+      if (pt[0] === t[0] && pt[pt.length - 1] === t[t.length - 1] && lev(pk, nk) <= 2) out.push({ p, igual: false });
+    }
+  }
+  return out.sort((a, b) => b.igual - a.igual);
+}
+
+/* ---------- telas ---------- */
+function avatar(p, extra) { return `<div class="av"${extra ? ` style="${extra}"` : ''}>${fotoOk(p.foto) ? `<img alt="" src="${p.foto}">` : esc(iniciais(p.nome))}</div>`; }
+function contato(p) {
+  if (!p.telefone) return '';
+  const d = p.telefone, wa = (d.length <= 11 ? '55' : '') + d;
+  return `<a class="btn peq" href="https://wa.me/${esc(wa)}" target="_blank" rel="noopener">WhatsApp</a><a class="btn peq sec" href="tel:+${esc(wa)}">Ligar</a>`;
+}
+function itemP(p, sub, comContato) {
+  return `<div class="item"><button class="quem" data-act="ver" data-id="${esc(p.id)}">${avatar(p)}<span class="t"><span class="n">${esc(p.nome)}</span><span class="dica">${sub}</span></span></button>${comContato && p.telefone ? `<span class="btns">${contato(p)}</span>` : ''}</div>`;
+}
+const linkP = p => `<button class="link" data-act="ver" data-id="${esc(p.id)}">${esc(p.nome)}</button>`;
+
+function telaGate() {
+  return `<div class="gate"><div class="emb">${EMB}</div><h1>Agenda ${esc(FAMILIA)}</h1>
+<p class="dica">Para a família ficar mais perto.</p>
+<section class="carta" aria-label="Uma palavra de quem criou este aplicativo">
+<h2>Uma palavra de quem criou esta agenda</h2>
+<p>Este aplicativo nasceu de um desejo simples: manter a nossa família mais próxima. Aqui você pode se lembrar com carinho de cada parente, ligar ou mandar uma mensagem quando bater a saudade e não deixar passar em branco o aniversário de ninguém.</p>
+<p>Queremos também ver a nossa família crescer: saber em quais cidades do Brasil moram os nossos e desenhar, de um jeito simples, de onde viemos e quem vem de quem. Uma árvore para a gente olhar e se orgulhar.</p>
+<p>Por isso pedimos só o que uma agenda de família precisa: nome, telefone, cidade e estado onde mora, e dia e mês do aniversário. <b>Nunca pedimos senha, CPF, documentos ou dinheiro</b>, e nada aqui é vendido ou divulgado. Quem vê os dados são apenas os parentes que receberam o código, de dentro da própria família.</p>
+<p class="assina">Com carinho,<br><b>Preto</b></p>
+</section>
+<form id="fgate"><label for="cod">Código da família</label><input id="cod" autocomplete="off" autocapitalize="off" spellcheck="false">
+<div class="erro" role="alert">${esc(S.erro)}</div><button class="btn full" type="submit">Entrar</button></form>
+${SCRIPT_URL ? '' : '<p class="dica"><b>Modo demonstração:</b> use o código <b>demo</b>. Nada é enviado para a planilha.</p>'}
+<p class="dica">Os dados ficam numa planilha privada da família ${esc(FAMILIA)} e só aparecem para quem tem o código.</p>
+${instalado() ? '' : '<p class="dica"><a href="instalar.html">Instalar o aplicativo neste aparelho (celular, tablet ou computador)</a></p>'}</div>`;
+}
+
+function cabecalho() { return `<header class="topo"><div class="emb">${EMB}</div><h1>Agenda ${esc(FAMILIA)}</h1></header>${S.offline ? '<div class="aviso">Sem conexão: mostrando a última lista salva neste aparelho.</div>' : ''}`; }
+function nav() {
+  const it = [['inicio', 'Início'], ['pessoas', 'Pessoas'], ['arvore', 'Árvore'], ['cadastro', 'Cadastrar']];
+  const atual = S.tab === 'pessoa' ? S.voltar : S.tab;
+  return `<nav class="nav" aria-label="Seções">${it.map(([k, t]) => `<button data-act="aba" data-tab="${k}"${atual === k ? ' aria-current="page"' : ''}>${t}</button>`).join('')}</nav>`;
+}
+let DP = null; // convite de instalação do navegador (quando disponível)
+const instalado = () => (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+const cartaoInstalar = () => instalado() ? '' : `<section class="card"><h2>Ter a agenda sempre à mão</h2><p>Instale no celular, tablet ou computador: ela ganha um ícone na tela, abre como um aplicativo e você não precisa digitar o endereço de novo.</p><button class="btn full" data-act="instalar">Instalar no meu aparelho</button><p class="dica" style="margin:8px 0 0"><a href="instalar.html">Ver o passo a passo para o meu aparelho</a></p></section>`;
+const vazio = () => `<div class="card"><h2>Ninguém cadastrado ainda</h2><p>Comece pelo seu cadastro; depois cada parente pode completar o seu.</p><button class="btn full" data-act="aba" data-tab="cadastro">Fazer meu cadastro</button></div>${cartaoInstalar()}`;
+
+function viewInicio() {
+  const P = Object.values(S.people);
+  if (!P.length) return vazio();
+  const h = hoje();
+  const doDia = P.filter(p => { const n = parseNasc(p.nascimento); return n && n.d === h.d && n.m === h.m; }).sort(byNome);
+  const doMes = P.filter(p => { const n = parseNasc(p.nascimento); return n && n.m === S.mes; }).sort((a, b) => parseNasc(a.nascimento).d - parseNasc(b.nascimento).d);
+  let html = S.msg ? `<div class="card destaque" role="status"><b>${esc(S.msg)}</b></div>` : '';
+  S.msg = '';
+  html += doDia.length
+    ? `<section class="card destaque"><h2>Hoje tem aniversário</h2>${doDia.map(p => itemP(p, esc(local(p)), true)).join('')}</section>`
+    : `<section class="card"><h2>Hoje</h2><p class="dica">Hoje não há aniversariantes.</p></section>`;
+  html += `<section class="card"><h2>Aniversariantes do mês</h2><label for="mes" class="dica" style="margin-top:0">Mês</label>
+<select id="mes">${MESES.map((m, i) => `<option value="${i + 1}"${S.mes === i + 1 ? ' selected' : ''}>${m}</option>`).join('')}</select>
+<div style="margin-top:8px">${doMes.length ? doMes.map(p => itemP(p, `dia ${parseNasc(p.nascimento).d}${p.cidade ? ' · ' + esc(local(p)) : ''}`, true)).join('') : '<p class="dica">Nenhum aniversariante neste mês.</p>'}</div></section>
+${cartaoInstalar()}
+<p class="dica" style="text-align:center">${P.length} ${P.length === 1 ? 'pessoa cadastrada' : 'pessoas cadastradas'}.<br><button class="link" data-act="sair">Sair deste aparelho</button></p>`;
+  return html;
+}
+
+function listaPessoas() {
+  const q = norm(S.busca);
+  const P = Object.values(S.people).filter(p => !q || norm(p.nome).includes(q) || norm(p.cidade).includes(q) || norm(ufNome(p.uf)).includes(q) || norm(p.uf) === q).sort(byNome);
+  return P.length ? P.map(p => itemP(p, esc(local(p) || 'Cidade não informada') + (nascTxt(p) ? ' · ' + nascTxt(p) : ''), true)).join('') : '<p class="dica">Ninguém encontrado.</p>';
+}
+function viewPessoas() {
+  if (!Object.keys(S.people).length) return vazio();
+  return `<section class="card"><label for="busca" style="margin-top:0">Buscar por nome, cidade ou estado</label><input id="busca" type="search" value="${esc(S.busca)}" autocomplete="off"><div id="lista" style="margin-top:8px">${listaPessoas()}</div></section>`;
+}
+
+function viewArvore() {
+  const P = Object.values(S.people);
+  if (!P.length) return vazio();
+  const vis = new Set();
+  const filhosDe = id => P.filter(c => c.pai_id === id || c.mae_id === id).sort(byNome);
+  const no = p => {
+    vis.add(p.id);
+    const todos = filhosDe(p.id), novos = todos.filter(c => !vis.has(c.id)), ref = todos.filter(c => vis.has(c.id) && !novos.includes(c));
+    const sub = novos.map(c => vis.has(c.id) ? '' : no(c)).join('');
+    return `<li>${linkP(p)}${p.cidade ? ` <span class="dica">· ${esc(local(p))}</span>` : ''}${ref.length ? ` <span class="dica">(pai/mãe de ${ref.map(r => esc(r.nome)).join(', ')}, veja acima)</span>` : ''}${sub ? `<ul>${sub}</ul>` : ''}</li>`;
+  };
+  const raizes = P.filter(p => !p.pai_id && !p.mae_id).sort(byNome);
+  const com = raizes.filter(r => filhosDe(r.id).length), sem = raizes.filter(r => !filhosDe(r.id).length);
+  const arv = com.map(r => vis.has(r.id) ? '' : no(r)).join('');
+  return `<section class="card arv"><h2>Árvore da família</h2>${arv ? `<ul>${arv}</ul>` : '<p class="dica">Ainda não há ligações entre pais e filhos.</p>'}</section>
+${sem.length ? `<section class="card"><h2>Ainda sem ligações</h2><p class="dica">Pessoas cadastradas sem pais nem filhos informados. Peça que completem o cadastro.</p>${sem.map(p => `<div>${linkP(p)}</div>`).join('')}</section>` : ''}`;
+}
+
+function viewPessoa() {
+  const p = S.people[S.sel];
+  if (!p) return '<p>Pessoa não encontrada.</p>';
+  const pai = S.people[p.pai_id], mae = S.people[p.mae_id], fl = (S.filhos[p.id] || []).map(i => S.people[i]).filter(Boolean).sort(byNome);
+  const irm = Object.values(S.people).filter(x => x.id !== p.id && ((p.pai_id && x.pai_id === p.pai_id) || (p.mae_id && x.mae_id === p.mae_id))).sort(byNome);
+  const nd = '<span class="dica">não informado</span>';
+  return `<button class="link" data-act="aba" data-tab="${esc(S.voltar)}">&larr; Voltar</button>
+<div class="card" style="text-align:center">${avatar(p, 'width:96px;height:96px;margin:0 auto 10px;font-size:32px')}<h2>${esc(p.nome)}</h2>
+<p class="dica">${p.cidade ? esc(local(p)) : 'Cidade não informada'}${nascTxt(p) ? ' · aniversário em ' + nascTxt(p) : ''}</p>
+${p.telefone ? `<p>${esc(fmtTel(p.telefone))}</p><div class="btns" style="margin:0;justify-content:center">${contato(p)}</div>` : '<p class="dica">Telefone não informado.</p>'}</div>
+<div class="card"><h2>Família</h2><p><b>Pai:</b> ${pai ? linkP(pai) : nd}</p><p><b>Mãe:</b> ${mae ? linkP(mae) : nd}</p>
+<p><b>Irmãos:</b> ${irm.length ? irm.map(linkP).join(', ') : nd}</p>
+<p><b>Filhos:</b> ${fl.length ? fl.map(linkP).join(', ') : nd}</p>
+<button class="btn sec full" data-act="completar" data-id="${esc(p.id)}">Completar este cadastro</button></div>`;
+}
+
+/* ---------- cadastro (passo a passo) ---------- */
+function iniciarWizard(pid) {
+  const ex = pid ? S.people[pid] : null, n = ex ? parseNasc(ex.nascimento) : null;
+  S.w = { step: 1, exId: pid || null, decEu: !!pid, after: 2, queue: [], erro: '', enviando: false, papel: '',
+    eu: { id: pid || novoId(), nome: ex ? ex.nome : '', telefone: ex ? ex.telefone : '', cidade: ex ? ex.cidade : '', uf: ex ? ex.uf : '', dia: n ? String(n.d) : '', mes: n ? String(n.m) : '', foto: ex ? ex.foto : '' },
+    pai: { nome: '', link: null }, mae: { nome: '', link: null }, irmaos: [{ nome: '', link: null, tipo: 'ambos' }], filhos: [{ nome: '', link: null }] };
+  S.tab = 'cadastro'; render(); window.scrollTo(0, 0);
+}
+const wTopo = (n) => `<div class="prog" aria-hidden="true"><i style="width:${n * 20}%"></i></div><p class="dica">Passo ${n} de 5</p>`;
+function opcoesUf(v) { return '<option value="">Escolha o estado</option>' + ESTADOS.map(([s, n]) => `<option value="${s}"${s === v ? ' selected' : ''}>${s === 'EX' ? n : n + ' (' + s + ')'}</option>`).join(''); }
+
+function opcoesDia(v) { return '<option value="">Dia</option>' + Array.from({ length: 31 }, (_, i) => `<option value="${i + 1}"${String(i + 1) === v ? ' selected' : ''}>${i + 1}</option>`).join(''); }
+function opcoesMes(v) { return '<option value="">Mês</option>' + MESES.map((m, i) => `<option value="${i + 1}"${String(i + 1) === v ? ' selected' : ''}>${m}</option>`).join(''); }
+
+function wPasso1() {
+  const w = S.w, e = w.eu, trav = !!w.exId;
+  return `${wTopo(1)}<div class="card"><h2>${trav ? 'Completar cadastro' : 'Seus dados'}</h2>
+<label for="f-nome" style="margin-top:0">Nome completo, sem abreviaturas</label><input id="f-nome" value="${esc(e.nome)}"${trav ? ' readonly' : ''} autocomplete="name">
+<label for="f-tel">Telefone com DDD (WhatsApp)</label><input id="f-tel" inputmode="tel" value="${esc(e.telefone)}" placeholder="65 99999-9999" autocomplete="tel"><div class="dica">Se mora fora do Brasil, inclua o código do país.</div>
+<label for="f-cid">Cidade onde mora</label><input id="f-cid" value="${esc(e.cidade)}" autocomplete="address-level2">
+<label for="f-uf">Estado</label><select id="f-uf" autocomplete="address-level1">${opcoesUf(e.uf)}</select>
+<label for="f-dia">Aniversário (só dia e mês)</label><div class="linha"><select id="f-dia">${opcoesDia(e.dia)}</select><select id="f-mes" aria-label="Mês">${opcoesMes(e.mes)}</select></div>
+<label for="f-foto">Foto (opcional)</label><div class="linha" style="align-items:center"><div class="av" id="prev" style="flex:none;width:48px">${fotoOk(e.foto) ? `<img alt="" src="${e.foto}">` : '?'}</div><input id="f-foto" type="file" accept="image/*"></div>
+<div class="erro" role="alert">${esc(w.erro)}</div>
+<button class="btn full" data-act="p1">Continuar</button></div>`;
+}
+
+function wPasso2() {
+  const w = S.w, ex = w.exId ? S.people[w.exId] : null;
+  const campo = (id, rotulo, ja, nome) => ja
+    ? `<p><b>${rotulo}:</b> ${esc(ja.nome)} <span class="dica">(já informado)</span></p>`
+    : `<label for="${id}">${rotulo}</label><input id="${id}" value="${esc(nome)}" autocomplete="off" placeholder="Nome completo">`;
+  return `${wTopo(2)}<div class="card"><h2>Seus pais</h2><p class="dica">Deixe em branco se não souber ou não quiser informar. Os nomes servem para ligar a árvore.</p>
+${campo('f-pai', 'Nome completo do pai', ex && S.people[ex.pai_id], w.pai.nome)}${campo('f-mae', 'Nome completo da mãe', ex && S.people[ex.mae_id], w.mae.nome)}
+<div class="erro" role="alert">${esc(w.erro)}</div>
+<div class="linha"><button class="btn sec" data-act="wvoltar">Voltar</button><button class="btn" data-act="p2">Continuar</button></div></div>`;
+}
+
+function wPasso3() {
+  const w = S.w;
+  const tipo = (i, v, rot) => `<option value="${v}"${w.irmaos[i].tipo === v ? ' selected' : ''}>${rot}</option>`;
+  return `${wTopo(3)}<div class="card"><h2>Seus irmãos e irmãs</h2><p class="dica">Opcional. Escreva o nome completo de cada irmão ou irmã. Eles ficam ligados aos pais que você informou no passo anterior.</p>
+${w.irmaos.map((f, i) => `<label for="f-ir-${i}">Irmão(ã) ${i + 1}</label><input id="f-ir-${i}" value="${esc(f.nome)}" autocomplete="off" placeholder="Nome completo">
+<select id="f-irt-${i}" aria-label="Parentesco do irmão(ã) ${i + 1}" style="margin-top:6px">${tipo(i, 'ambos', 'Mesmo pai e mesma mãe')}${tipo(i, 'pai', 'Só do mesmo pai')}${tipo(i, 'mae', 'Só da mesma mãe')}</select>`).join('')}
+<button class="btn sec full" style="margin-top:12px" data-act="maisirmao">+ Adicionar outro irmão(ã)</button>
+<div class="erro" role="alert">${esc(w.erro)}</div>
+<div class="linha"><button class="btn sec" data-act="wvoltar">Voltar</button><button class="btn" data-act="p3">Continuar</button></div></div>`;
+}
+
+function wPasso4() {
+  const w = S.w;
+  return `${wTopo(4)}<div class="card"><h2>Seus filhos</h2><p class="dica">Opcional. Escreva o nome completo de cada filho(a).</p>
+<fieldset style="border:0;padding:0;margin:8px 0"><legend style="font-weight:600">Você é:</legend>
+<label class="chk" style="margin:6px 0"><input type="radio" name="papel" value="pai"${w.papel === 'pai' ? ' checked' : ''}> Pai</label>
+<label class="chk" style="margin:6px 0"><input type="radio" name="papel" value="mae"${w.papel === 'mae' ? ' checked' : ''}> Mãe</label></fieldset>
+${w.filhos.map((f, i) => `<label for="f-fi-${i}">Filho(a) ${i + 1}</label><input id="f-fi-${i}" value="${esc(f.nome)}" autocomplete="off" placeholder="Nome completo">`).join('')}
+<button class="btn sec full" style="margin-top:12px" data-act="maisfilho">+ Adicionar outro filho(a)</button>
+<div class="erro" role="alert">${esc(w.erro)}</div>
+<div class="linha"><button class="btn sec" data-act="wvoltar">Voltar</button><button class="btn" data-act="p4">Continuar</button></div></div>`;
+}
+
+function wDup() {
+  const q = S.w.queue[0];
+  const quem = { eu: 'Seu nome', pai: 'O nome do seu pai', mae: 'O nome da sua mãe', irmao: 'O nome do irmão(ã)', filho: 'O nome do filho(a)' }[q.kind];
+  return `${wTopo(q.kind === 'eu' ? 1 : 4)}<div class="card"><h2>Este nome já está cadastrado</h2>
+<p>${quem}, <b>${esc(q.nome)}</b>, parece já estar na agenda. É a mesma pessoa?</p>
+${q.cands.map(c => `<div class="item">${'<div class="quem" style="cursor:default">'}${avatar(c.p)}<span class="t"><span class="n">${esc(c.p.nome)}</span><span class="dica">${esc(local(c.p) || 'Cidade não informada')}${nascTxt(c.p) ? ' · ' + nascTxt(c.p) : ''}${c.igual ? '' : ' · nome parecido'}</span></span></div><span class="btns"><button class="btn peq" data-act="dupsim" data-id="${esc(c.p.id)}">${q.kind === 'eu' ? 'Sou eu' : 'É esta pessoa'}</button></span></div>`).join('')}
+<button class="btn sec full" style="margin-top:12px" data-act="dupnao">Não, é outra pessoa. Cadastrar mesmo assim</button>
+<button class="link" data-act="wvoltar">Voltar</button></div>`;
+}
+
+function wPasso5() {
+  const w = S.w, e = w.eu, ex = w.exId ? S.people[w.exId] : null;
+  const nm = x => x.link && x.link !== 'novo' ? S.people[x.link].nome : titulo(x.nome);
+  const filhos = w.filhos.filter(f => f.nome.trim()), irmaos = w.irmaos.filter(f => f.nome.trim());
+  return `${wTopo(5)}<div class="card"><h2>Confira e envie</h2>
+<p><b>${esc(ex ? ex.nome : titulo(e.nome))}</b><br>${esc(fmtTel(e.telefone.replace(/\D/g, '')))} · ${esc(local(e))}${e.dia && e.mes ? ` · aniversário ${e.dia} de ${MESES[e.mes - 1]}` : ''}</p>
+${w.pai.nome.trim() ? `<p><b>Pai:</b> ${esc(nm(w.pai))}</p>` : ''}${w.mae.nome.trim() ? `<p><b>Mãe:</b> ${esc(nm(w.mae))}</p>` : ''}
+${irmaos.length ? `<p><b>Irmãos:</b> ${irmaos.map(f => esc(nm(f))).join(', ')}</p>` : ''}${filhos.length ? `<p><b>Filhos:</b> ${filhos.map(f => esc(nm(f))).join(', ')}</p>` : ''}
+<p class="dica">Depois de enviado, o cadastro não pode ser editado nem apagado por aqui; só complementado. Correções são feitas pelo responsável pela agenda.</p>
+<label class="chk"><input type="checkbox" id="f-ok"> <span>Informei apenas dados de parentes que sei que concordam em constar nesta agenda da família.</span></label>
+<div class="erro" role="alert">${esc(w.erro)}</div>
+<div class="linha"><button class="btn sec" data-act="wvoltar">Voltar</button><button class="btn" data-act="enviar"${w.enviando ? ' disabled' : ''}>${w.enviando ? 'Enviando…' : 'Enviar'}</button></div></div>`;
+}
+
+function viewCadastro() {
+  if (!S.w) iniciarWizard(null);
+  const w = S.w;
+  return w.step === 'dup' ? wDup() : [null, wPasso1, wPasso2, wPasso3, wPasso4, wPasso5][w.step]();
+}
+
+function corpo() {
+  switch (S.tab) {
+    case 'pessoas': return viewPessoas();
+    case 'arvore': return viewArvore();
+    case 'pessoa': return viewPessoa();
+    case 'cadastro': return viewCadastro();
+    default: return viewInicio();
+  }
+}
+
+function render() {
+  const app = $('#app');
+  if (S.tela === 'carregando') { app.innerHTML = '<div class="gate"><div class="emb">' + EMB + '</div><p>Carregando…</p></div>'; return; }
+  if (S.tela === 'gate' || !S.code) { app.innerHTML = telaGate(); return; }
+  app.innerHTML = cabecalho() + '<main class="main">' + corpo() + '</main>' + nav();
+}
+
+/* ---------- ações do cadastro ---------- */
+function lerP1() {
+  const e = S.w.eu;
+  if (!S.w.exId) e.nome = $('#f-nome').value;
+  e.telefone = $('#f-tel').value; e.cidade = $('#f-cid').value; e.uf = $('#f-uf').value; e.dia = $('#f-dia').value; e.mes = $('#f-mes').value;
+}
+function seguirFila() {
+  const w = S.w; w.queue.shift();
+  if (!w.queue.length) { w.step = w.after; w.erro = ''; }
+  render(); window.scrollTo(0, 0);
+}
+
+const ACT = {
+  aba(d) {
+    if (d.tab === 'cadastro') { if (S.tab !== 'cadastro') S.w = null; }
+    else S.w = null;
+    if (d.tab !== 'pessoas') S.busca = S.tab === 'pessoas' ? S.busca : '';
+    S.tab = d.tab; render(); window.scrollTo(0, 0);
+  },
+  ver(d) { if (S.tab !== 'pessoa') S.voltar = S.tab === 'cadastro' ? 'pessoas' : S.tab; S.sel = d.id; S.w = null; S.tab = 'pessoa'; render(); window.scrollTo(0, 0); },
+  completar(d) { iniciarWizard(d.id); },
+  async instalar() {
+    if (DP) { const d = DP; DP = null; try { d.prompt(); await d.userChoice; } catch (e) {} }
+    else location.href = 'instalar.html';
+  },
+  sair() { ls.del('code'); ls.del('cache'); S.code = ''; S.tela = 'gate'; S.people = {}; S.rows = []; render(); },
+
+  p1() {
+    const w = S.w, e = w.eu; lerP1();
+    if (!w.exId) { const er = nomeErro(e.nome); if (er) { w.erro = er; return render(); } }
+    const tel = e.telefone.replace(/\D/g, '');
+    if (tel.length < 8 || tel.length > 15) { w.erro = 'Informe um telefone válido, com DDD.'; return render(); }
+    if (e.cidade.trim().length < 2) { w.erro = 'Informe a cidade onde mora.'; return render(); }
+    if (!ufNome(e.uf)) { w.erro = 'Escolha o estado onde mora.'; return render(); }
+    if (!!e.dia !== !!e.mes) { w.erro = 'Escolha o dia e o mês do aniversário, ou deixe os dois em branco.'; return render(); }
+    if (e.dia && +e.dia > DIAS_MES[+e.mes - 1]) { w.erro = 'Essa data não existe. Confira o dia e o mês.'; return render(); }
+    e.telefone = tel; e.cidade = titulo(e.cidade); w.erro = '';
+    if (!w.exId && !w.decEu) {
+      const cands = achar(e.nome, []);
+      if (cands.length) { w.queue = [{ kind: 'eu', nome: titulo(e.nome), cands }]; w.after = 2; w.step = 'dup'; return render(), window.scrollTo(0, 0); }
+      w.decEu = true;
+    }
+    w.step = 2; render(); window.scrollTo(0, 0);
+  },
+  p2() {
+    const w = S.w, pai = $('#f-pai'), mae = $('#f-mae');
+    for (const [k, el] of [['pai', pai], ['mae', mae]]) {
+      if (!el) continue;
+      if (el.value !== w[k].nome) w[k].link = null;
+      w[k].nome = el.value;
+      if (el.value.trim()) { const er = nomeErro(el.value); if (er) { w.erro = er + ' (' + (k === 'pai' ? 'pai' : 'mãe') + ')'; return render(); } }
+    }
+    w.erro = ''; w.step = 3; render(); window.scrollTo(0, 0);
+  },
+  maisirmao() { lerIrmaos(); S.w.irmaos.push({ nome: '', link: null, tipo: 'ambos' }); render(); },
+  p3() {
+    const w = S.w; lerIrmaos();
+    const ex = w.exId ? S.people[w.exId] : null;
+    const temPai = !!(w.pai.nome.trim() || (ex && ex.pai_id)), temMae = !!(w.mae.nome.trim() || (ex && ex.mae_id));
+    for (const f of w.irmaos.filter(i => i.nome.trim())) {
+      const er = nomeErro(f.nome); if (er) { w.erro = er; return render(); }
+      if (f.tipo === 'pai' && !temPai) { w.erro = 'Para registrar um irmão do mesmo pai, volte e informe o nome do pai.'; return render(); }
+      if (f.tipo === 'mae' && !temMae) { w.erro = 'Para registrar um irmão da mesma mãe, volte e informe o nome da mãe.'; return render(); }
+      if (f.tipo === 'ambos' && !temPai && !temMae) { w.erro = 'Para registrar irmãos, volte e informe o nome do pai ou da mãe.'; return render(); }
+    }
+    w.erro = ''; w.step = 4; render(); window.scrollTo(0, 0);
+  },
+  maisfilho() { lerFilhos(); S.w.filhos.push({ nome: '', link: null }); render(); },
+  p4() {
+    const w = S.w; lerFilhos();
+    const preenchidos = w.filhos.filter(f => f.nome.trim());
+    if (preenchidos.length && !w.papel) { w.erro = 'Informe se você é o pai ou a mãe.'; return render(); }
+    for (const f of preenchidos) { const er = nomeErro(f.nome); if (er) { w.erro = er; return render(); } }
+    w.erro = '';
+    const excl = [w.eu.id], q = [];
+    const ex = w.exId ? S.people[w.exId] : null;
+    for (const k of ['pai', 'mae']) {
+      const x = w[k];
+      if (ex && ex[k + '_id']) continue;
+      if (x.nome.trim() && !x.link) { const c = achar(x.nome, excl); if (c.length) q.push({ kind: k, nome: titulo(x.nome), cands: c }); else x.link = 'novo'; }
+    }
+    w.irmaos.forEach((f, i) => { if (f.nome.trim() && !f.link) { const c = achar(f.nome, excl); if (c.length) q.push({ kind: 'irmao', idx: i, nome: titulo(f.nome), cands: c }); else f.link = 'novo'; } });
+    w.filhos.forEach((f, i) => { if (f.nome.trim() && !f.link) { const c = achar(f.nome, excl); if (c.length) q.push({ kind: 'filho', idx: i, nome: titulo(f.nome), cands: c }); else f.link = 'novo'; } });
+    if (q.length) { w.queue = q; w.after = 5; w.step = 'dup'; } else w.step = 5;
+    render(); window.scrollTo(0, 0);
+  },
+  dupsim(d) {
+    const w = S.w, q = w.queue[0];
+    if (q.kind === 'eu') { const p = S.people[d.id]; w.exId = d.id; w.eu.id = d.id; w.eu.nome = p.nome; w.decEu = true; }
+    else if (q.kind === 'filho') w.filhos[q.idx].link = d.id;
+    else if (q.kind === 'irmao') w.irmaos[q.idx].link = d.id;
+    else w[q.kind].link = d.id;
+    seguirFila();
+  },
+  dupnao() {
+    const w = S.w, q = w.queue[0];
+    if (q.kind === 'eu') w.decEu = true;
+    else if (q.kind === 'filho') w.filhos[q.idx].link = 'novo';
+    else if (q.kind === 'irmao') w.irmaos[q.idx].link = 'novo';
+    else w[q.kind].link = 'novo';
+    seguirFila();
+  },
+  wvoltar() {
+    const w = S.w;
+    if (w.step === 'dup') { w.queue = []; w.step = w.after === 2 ? 1 : 4; }
+    else if (w.step === 1) { S.w = null; S.tab = 'inicio'; }
+    else w.step -= 1;
+    w.erro = ''; render(); window.scrollTo(0, 0);
+  },
+  async enviar() {
+    const w = S.w; if (w.enviando) return;
+    if (!$('#f-ok').checked) { w.erro = 'Marque a confirmação para enviar.'; return render(); }
+    const rows = montarRows(); w.enviando = true; w.erro = ''; render();
+    try { await api.add(S.code, rows); }
+    catch (e) { w.enviando = false; w.erro = e.message === 'codigo' ? 'Código não aceito. Saia e entre de novo.' : 'Não foi possível enviar agora. Confira a conexão e tente de novo.'; return render(); }
+    try { await recarregar(); } catch (e) {}
+    S.msg = 'Cadastro enviado. Obrigado!'; S.w = null; S.tab = 'inicio'; render(); window.scrollTo(0, 0);
+  }
+};
+
+function lerIrmaos() {
+  const w = S.w;
+  w.irmaos.forEach((f, i) => {
+    const el = $('#f-ir-' + i), t = $('#f-irt-' + i);
+    if (el) { if (el.value !== f.nome) f.link = null; f.nome = el.value; }
+    if (t) f.tipo = t.value;
+  });
+}
+
+function lerFilhos() {
+  const w = S.w;
+  w.filhos.forEach((f, i) => { const el = $('#f-fi-' + i); if (el) { if (el.value !== f.nome) f.link = null; f.nome = el.value; } });
+  const r = document.querySelector('input[name=papel]:checked'); if (r) w.papel = r.value;
+}
+
+function montarRows() {
+  const w = S.w, e = w.eu, ex = w.exId ? S.people[w.exId] : null, rows = [];
+  const vazioR = id => ({ id, nome: '', pai_id: '', mae_id: '', telefone: '', cidade: '', uf: '', nascimento: '', foto: '' });
+  const ref = k => {
+    const x = w[k];
+    if (ex && ex[k + '_id']) return '';
+    if (!x.nome.trim()) return '';
+    if (x.link && x.link !== 'novo') return x.link;
+    x.id = x.id || novoId();
+    if (!rows.some(r => r.id === x.id)) rows.push(Object.assign(vazioR(x.id), { nome: titulo(x.nome) }));
+    return x.id;
+  };
+  const paiId = ref('pai'), maeId = ref('mae');
+  const nasc = e.dia && e.mes ? String(e.dia).padStart(2, '0') + '/' + String(e.mes).padStart(2, '0') : '';
+  rows.unshift(Object.assign(vazioR(e.id), { nome: ex ? ex.nome : titulo(e.nome), pai_id: paiId, mae_id: maeId, telefone: e.telefone, cidade: e.cidade, uf: e.uf, nascimento: nasc, foto: fotoOk(e.foto) ? e.foto : '' }));
+  const efPai = ex && ex.pai_id ? ex.pai_id : paiId, efMae = ex && ex.mae_id ? ex.mae_id : maeId;
+  for (const f of w.irmaos) {
+    if (!f.nome.trim() || f.link === e.id) continue;
+    const campos = {};
+    if ((f.tipo === 'ambos' || f.tipo === 'pai') && efPai) campos.pai_id = efPai;
+    if ((f.tipo === 'ambos' || f.tipo === 'mae') && efMae) campos.mae_id = efMae;
+    if (f.link && f.link !== 'novo') { if (!rows.some(r => r.id === f.link)) rows.push(Object.assign(vazioR(f.link), { nome: S.people[f.link].nome }, campos)); }
+    else { f.id = f.id || novoId(); if (!rows.some(r => r.id === f.id)) rows.push(Object.assign(vazioR(f.id), { nome: titulo(f.nome) }, campos)); }
+  }
+  for (const f of w.filhos) {
+    if (!f.nome.trim()) continue;
+    const campos = w.papel === 'pai' ? { pai_id: e.id } : { mae_id: e.id };
+    if (f.link && f.link !== 'novo') rows.push(Object.assign(vazioR(f.link), { nome: S.people[f.link].nome }, campos));
+    else { f.id = f.id || novoId(); if (!rows.some(r => r.id === f.id)) rows.push(Object.assign(vazioR(f.id), { nome: titulo(f.nome) }, campos)); }
+  }
+  return rows;
+}
+
+function lerFoto(file) {
+  return new Promise((res, rej) => {
+    const img = new Image(), url = URL.createObjectURL(file);
+    img.onload = () => {
+      const s = 160, c = document.createElement('canvas'); c.width = c.height = s;
+      const m = Math.min(img.width, img.height);
+      c.getContext('2d').drawImage(img, (img.width - m) / 2, (img.height - m) / 2, m, m, 0, 0, s, s);
+      URL.revokeObjectURL(url); res(c.toDataURL('image/jpeg', 0.72));
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); rej(new Error('foto')); };
+    img.src = url;
+  });
+}
+
+/* ---------- eventos ---------- */
+const app = $('#app');
+app.addEventListener('click', ev => { const b = ev.target.closest('[data-act]'); if (b && ACT[b.dataset.act]) ACT[b.dataset.act](b.dataset, b); });
+app.addEventListener('submit', ev => {
+  if (ev.target.id === 'fgate') { ev.preventDefault(); const v = $('#cod').value.trim(); if (!v) return; S.code = v; S.erro = ''; carregar(); }
+});
+app.addEventListener('input', ev => { if (ev.target.id === 'busca') { S.busca = ev.target.value; $('#lista').innerHTML = listaPessoas(); } });
+app.addEventListener('change', async ev => {
+  const t = ev.target;
+  if (t.id === 'mes') { S.mes = +t.value; render(); }
+  if (t.id === 'f-foto' && t.files && t.files[0] && S.w) {
+    try { const d = await lerFoto(t.files[0]); S.w.eu.foto = d; $('#prev').innerHTML = `<img alt="" src="${d}">`; }
+    catch (e) { S.w.erro = 'Não foi possível usar essa foto.'; }
+  }
+});
+
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); DP = e; });
+window.addEventListener('appinstalled', () => { DP = null; });
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) navigator.serviceWorker.register('sw.js').catch(() => {});
+if (S.code) carregar(); else render();
+})();
+</script>
+</body>
+</html>
